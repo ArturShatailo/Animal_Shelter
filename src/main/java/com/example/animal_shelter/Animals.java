@@ -8,6 +8,7 @@ public interface Animals {
     String [] sex = {"f", "m"};
 
     Animal create();
+    //Animal pairing(Animal f, Animal m);
     Animal born(String breed);
     Double calculateFeedMass();
     Double calculateFeedCost();

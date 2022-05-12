@@ -2,8 +2,8 @@ package com.example.animal_shelter;
 
 public class Dog extends Animal implements Animals{
 
-    public Dog(String name, String breed, String sex, int feedingTimes, Feed feed, int skill, Double price) {
-        super(name, breed, sex, feedingTimes, feed, skill, price);
+    public Dog(String name, String breed, String sex, int feedingTimes, Feed feed, int skill, Double price, int age) {
+        super(name, breed, sex, feedingTimes, feed, skill, price, age);
     }
 
     public Dog(){
@@ -18,6 +18,7 @@ public class Dog extends Animal implements Animals{
         this.setFeed(new Feed(2.0, 50.0));
         this.setPrice(200.0);
         this.setSkill(0);
+        this.setAge(12);
         return this;
     }
 
@@ -29,6 +30,7 @@ public class Dog extends Animal implements Animals{
         this.setFeed(new Feed(2.0, 50.0));
         this.setPrice(200.0);
         this.setSkill(0);
+        this.setAge(1);
         return this;
     }
 

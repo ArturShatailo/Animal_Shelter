@@ -9,10 +9,11 @@ public class Animal {
     private Feed feed;
     private int skill;
     private Double price;
+    private int age;
 
 
 
-    public Animal(String name, String breed, String sex, int feedingTimes, Feed feed, int skill, Double price) {
+    public Animal(String name, String breed, String sex, int feedingTimes, Feed feed, int skill, Double price, int age) {
         this.name = name;
         this.breed = breed;
         this.sex = sex;
@@ -20,10 +21,19 @@ public class Animal {
         this.feed = feed;
         this.skill = skill;
         this.price = price;
+        this.age = age;
     }
 
     public Animal(){
 
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 
     public String getName() {
@@ -90,10 +100,6 @@ public class Animal {
         return profit;
     }
 
-    public void pairing(){
-
-    }
-
     @Override
     public String toString(){
         return "(Some animal("+this.getSex()+") name: "+this.getName()+" breed: "+this.getBreed()+")";
@@ -105,4 +111,13 @@ public class Animal {
     public Double calculateFeedCost(){
         return this.getFeedingTimes()*this.getFeed().getPrice();
     }
+
+
+    public void monthOlder(){
+        this.age+=1;
+        if(this.age==60){
+            this.price/=2;
+        }
+    }
+
 }

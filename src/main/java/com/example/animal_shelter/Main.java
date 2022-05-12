@@ -8,13 +8,7 @@ public class Main {
     public static Menu m;
     final static int monthConstanta = 31;
 
-    /*static final String [] catBreeds = {"British", "Sphynx", "Maine Coon", "Himalayan", "General"};
-    static final String [] dogBreeds = {"German Shepherd", "Poodle", "Labrador", "Pug", "General"};
-    static final String [] names = {"MILO", "LUNA", "MAX", "OLIVER", "BENTLEY", "LEO", "OLLIE", "LOKI", "BUDDY", "BELLA", "KOBE", "CHARLIE", "JASPER", "WILLOW", "BO", "LUCKY", "BLAZE"};
-    static final String [] sex = {"f", "m"};*/
-
     public static void main(String[] args) {
-
 
         System.out.println("Select a name of your Animal Shelter");
         String name = Tech.GetInputStringFunction();
@@ -60,7 +54,7 @@ public class Main {
         Feed feed = new Feed(2.0, 50.0);
         m = new Menu(new ArrayList<>());
 
-        System.out.println("Your animal shelter: "+company);
+        System.out.println("\nYour animal shelter: "+company);
 
         //Filling arrayList for menu creating
         m.arrayMenu.add("Press 1 to hire Coach (monthly salary: $"+coach.getSalary()+")");

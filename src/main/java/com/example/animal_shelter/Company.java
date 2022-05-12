@@ -1,6 +1,8 @@
 package com.example.animal_shelter;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class Company {
@@ -117,9 +119,8 @@ public class Company {
         menu.menuBuilder();
         System.out.println("Input index of a Cat you wish to sell");
         int choice = Tech.GetInputFunction();
-        this.getCats().remove(choice);
-
-        this.setCapital(this.getCapital()+this.getCats().get(choice).getPrice());
+        this.setCapital(this.getCapital()+this.getCats().get((choice-1)).getPrice());
+        this.getCats().remove((choice-1));
     }
 
     public void sellDog(){
@@ -130,44 +131,112 @@ public class Company {
         menu.menuBuilder();
         System.out.println("Input index of a Dog you wish to sell");
         int choice = Tech.GetInputFunction();
-        this.getDogs().remove(choice);
-
-        this.setCapital(this.getCapital()+this.getDogs().get(choice).getPrice());
+        this.setCapital(this.getCapital()+this.getDogs().get((choice-1)).getPrice());
+        this.getDogs().remove((choice-1));
     }
 
     public void startMonth(){
 
         this.neededFeed = this.calculateFeedsAmount();
 
+        if(feedsControl()){
+
+            if(this.getCoaches() != null){
+                coaching();
+            }
+
+            this.getDogs().forEach(Animal::monthOlder);
+            this.getCats().forEach(Animal::monthOlder);
+
+            pairing(
+                    this.getCats().stream()
+                            .filter(Objects::nonNull)
+                            .filter(cat -> cat.getAge()>=12)
+                            .filter(cat -> cat.getSex().equals("f"))
+                            .parallel().toList().get(0),
+                    this.getCats().stream()
+                            .filter(Objects::nonNull)
+                            .filter(cat -> cat.getAge()>=12)
+                            .filter(cat -> cat.getSex().equals("m"))
+                            .parallel().toList().get(0)
+            );
+
+            pairing(
+                    this.getDogs().stream()
+                            .filter(Objects::nonNull)
+                            .filter(dog -> dog.getAge()>=12)
+                            .filter(dog -> dog.getSex().equals("f"))
+                            .parallel().toList().get(0),
+                    this.getDogs().stream()
+                            .filter(Objects::nonNull)
+                            .filter(dog -> dog.getAge()>=12)
+                            .filter(dog -> dog.getSex().equals("m"))
+                            .parallel().toList().get(0)
+            );
+
+            Main.callMenu();
+        }
+
+    }
+
+    public void pairing(Cat f, Cat m) {
+        System.out.println(f+" was pairing with "+m);
+
+        if(f != null && m != null){
+            if(f.getBreed().equals(m.getBreed())){
+                for(int i=0; i<Tech.getRandom(1, 5); i++){
+                    this.getCats().add(new Cat().born(m.getBreed()));
+                }
+            }else if(Tech.getRandom(0, 100)<=30){
+                for(int i=0; i<Tech.getRandom(1, 5); i++){
+                    this.getCats().add(new Cat().born("General"));
+                }
+            }
+        }
+    }
+
+    public void pairing(Dog f, Dog m) {
+        System.out.println(f+" was pairing with "+m);
+
+        if(f != null && m != null) {
+            if (f.getBreed().equals(m.getBreed())) {
+                for(int i=0; i<Tech.getRandom(1, 5); i++){
+                    this.getDogs().add(new Dog().born(m.getBreed()));
+                }
+            } else if (Tech.getRandom(0, 100) <= 30) {
+                for(int i=0; i<Tech.getRandom(1, 5); i++){
+                    this.getDogs().add(new Dog().born("General"));
+                }
+            }
+        }
+    }
+
+    public void coaching(){
+
+        this.getCoaches().forEach(coach -> this.capital-=coach.getSalary());
+
+        this.getCoaches().forEach(coach -> new AtomicReference<>(this.getCats()).set(coach.trainCat(this.getCats())));
+        this.getCoaches().forEach(coach -> new AtomicReference<>(this.getDogs()).set(coach.trainDog(this.getDogs())));
+
+        this.getCats().stream().filter(cat -> cat.getSkill()!=0).forEach(cat -> this.capital+=cat.exhibition());
+        this.getDogs().stream().filter(dog -> dog.getSkill()!=0).forEach(dog -> this.capital+=dog.exhibition());
+
+    }
+
+    public boolean feedsControl(){
+
         if(this.getFeeds().size()<this.neededFeed){
             System.out.println("\n-------------------");
             System.out.println("You need more Feeds");
             System.out.println("-------------------\n");
             Main.callMenu();
+            return false;
         }else{
-
             for(int i=0; i<this.neededFeed; i++){
                 this.getFeeds().remove(0);
             }
-
-            if(this.getCoaches() != null){
-
-                this.getCoaches().forEach(coach -> this.capital-=coach.getSalary());
-
-                this.getCoaches().forEach(coach -> new AtomicReference<>(this.getCats()).set(coach.trainCat(this.getCats())));
-                this.getCoaches().forEach(coach -> new AtomicReference<>(this.getDogs()).set(coach.trainDog(this.getDogs())));
-
-                this.getCats().stream().filter(cat -> cat.getSkill()!=0).forEach(cat -> this.capital+=cat.exhibition());
-                this.getDogs().stream().filter(dog -> dog.getSkill()!=0).forEach(dog -> this.capital+=dog.exhibition());
-
-                Main.callMenu();
-            }
-
-            //Here should be Age changes and Pairing of animals
-
+            return true;
         }
-
     }
-
 
 }
