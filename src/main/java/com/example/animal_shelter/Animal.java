@@ -12,18 +12,6 @@ public class Animal {
     private int age;
 
 
-
-    public Animal(String name, String breed, String sex, int feedingTimes, Feed feed, int skill, Double price, int age) {
-        this.name = name;
-        this.breed = breed;
-        this.sex = sex;
-        this.feedingTimes = feedingTimes;
-        this.feed = feed;
-        this.skill = skill;
-        this.price = price;
-        this.age = age;
-    }
-
     public Animal(){
 
     }
@@ -92,6 +80,8 @@ public class Animal {
         this.skill = skill;
     }
 
+
+    //method allows for CAT and DOG objects participate in Exhibition and return profit value for Company. Also increased the price for object
     public Double exhibition(){
         this.price+=(this.skill*2.0);
         double profit = (this.skill*10.0);
@@ -105,14 +95,17 @@ public class Animal {
         return "(Some animal("+this.getSex()+") name: "+this.getName()+" breed: "+this.getBreed()+")";
     }
 
+    //Calculating feed mass for one object Cat or Dog
     public Double calculateFeedMass(){
         return this.getFeedingTimes()*this.getFeed().getMass();
     }
+
+    //Calculating feed cost for one object Cat or Dog
     public Double calculateFeedCost(){
         return this.getFeedingTimes()*this.getFeed().getPrice();
     }
 
-
+    //Adding +1 month to age for Cat or Dog objects
     public void monthOlder(){
         this.age+=1;
         if(this.age==60){

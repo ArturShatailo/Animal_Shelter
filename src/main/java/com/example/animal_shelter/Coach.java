@@ -14,6 +14,8 @@ public class Coach {
         return salary;
     }
 
+    //Train methods receive List as an argument and check breed for not "General" and age for >= 12 in objects from List
+    //then setting for these objects random values from 1 to 30 in field skill
     public ArrayList<Cat> trainCat(ArrayList<Cat> cats){
 
 //        cats.stream()

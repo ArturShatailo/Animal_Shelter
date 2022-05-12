@@ -16,8 +16,8 @@ public class Tech {
         return scan.nextLine();
     }
 
+    //Get random value from min to max
     public static int getRandom(int min, int max){
-
         return (int) (Math.random()*(max-min))+min;
     }
 

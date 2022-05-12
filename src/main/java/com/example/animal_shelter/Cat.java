@@ -2,13 +2,11 @@ package com.example.animal_shelter;
 
 public class Cat extends Animal implements Animals{
 
-    public Cat(String name, String breed, String sex, int feedingTimes, Feed feed, int skill, Double price, int age) {
-        super(name, breed, sex, feedingTimes, feed, skill, price, age);
-    }
     public Cat(){
 
     };
 
+    //Creating new object (setting default values for object according to logic of this method)
     public Cat create(){
         this.setName(names[Tech.getRandom(0, names.length)]);
         this.setBreed(catBreeds[Tech.getRandom(0, catBreeds.length)]);
@@ -21,6 +19,8 @@ public class Cat extends Animal implements Animals{
         return this;
     }
 
+    //Creating new object (setting default values for object according to logic of this method). But the age field set as 1 and breed value
+    //received as an argument
     public Cat born(String breed){
         this.setName(names[Tech.getRandom(0, names.length)]);
         this.setBreed(breed);

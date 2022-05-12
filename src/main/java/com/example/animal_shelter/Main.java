@@ -10,33 +10,45 @@ public class Main {
 
     public static void main(String[] args) {
 
+        //Creating Company object and setting name for your new Company
         System.out.println("Select a name of your Animal Shelter");
         String name = Tech.GetInputStringFunction();
         company = new Company(500.0, name);
 
+        //filling out getDogs field collection with created by default 24 Dog objects
         for(int d=0; d<24; d++){
             company.getDogs().add(new Dog().create());
         }
+
+        //filling out getCats field collection with created by default 8 Cat objects
         for(int c=0; c<8; c++){
             company.getCats().add(new Cat().create());
         }
+
+        //filling out getFeeds field collection with created by default calculated amount of Feed objects
         for(int f=0; f<company.calculateFeedsAmount(); f++){
             company.getFeeds().add(new Feed(2.0, 50.0));
         }
 
+        //Start customer menu
         callMenu();
 
     }
 
+    //Adding created from Menu objects to Company fields
     public static void addToCompany(Coach coach){
         company.getCoaches().add(coach);
     }
 
     public static void addToCompany(Feed feed, Double amount){
+        //calculating of full kit of requested Feed amount cost
         double expenses = (amount*feed.getPrice());
+
+        //Buying Feeds if possible according to Company.capital.
         if(company.getCapital() >= expenses){
             company.setCapital(company.getCapital() - expenses);
 
+            //Adding Feed objects to getFeeds collection
             while(amount>0){
                 company.getFeeds().add(feed);
                 amount--;
@@ -48,8 +60,10 @@ public class Main {
         }
     }
 
+    //Creating new Menu object and filling out it with 5 options.
     public static void callMenu(){
 
+        //Default Feed and Coach objects creating for further adding them to Company fields after menu choice.
         Coach coach = new Coach(100.0);
         Feed feed = new Feed(2.0, 50.0);
         m = new Menu(new ArrayList<>());

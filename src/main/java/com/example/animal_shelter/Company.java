@@ -87,6 +87,7 @@ public class Company {
                 " (mass: "+this.calculateFeedsMass()+"g, cost: $"+this.calculateFeedsCost()+")";
     }
 
+    //Calculating needed Feed objects for Company's amount of Cat and Dog objects in collections
     public int calculateFeedsAmount(){
         int feed =
                 (this.getCats().stream().mapToInt(Cat::getFeedingTimes).sum())+
@@ -95,6 +96,7 @@ public class Company {
         return feed * Main.monthConstanta;
     }
 
+    //Calculating needed Feed objects full cost
     public Double calculateFeedsCost(){
         double fCost =
                 (this.getDogs().stream().mapToDouble(Dog::calculateFeedCost).sum())+
@@ -103,6 +105,7 @@ public class Company {
         return fCost * Main.monthConstanta;
     }
 
+    //Calculating needed Feed objects full mass
     public Double calculateFeedsMass(){
         double fMass =
                 (this.getDogs().stream().mapToDouble(Dog::calculateFeedMass).sum())+
@@ -111,6 +114,9 @@ public class Company {
         return fMass * Main.monthConstanta;
     }
 
+    //Selling Cat or Dog calls new Menu creating that will include all Cat or Dog objects in Company collections
+    //Then, wait for customers input of index of object form the Menu and delete this Object from cats or dogs collection of
+    //Company object. Price of this Cat or Dog will be added to Company's capital field.
     public void sellCat(){
         ArrayList<String> sellAnimals = new ArrayList<>();
         this.getCats().forEach(cat -> sellAnimals.add(cat.toString()+"("+cat.getPrice()+")"));
@@ -145,6 +151,7 @@ public class Company {
                 coaching();
             }
 
+            //Calling monthOlder method from Animal class for each Cat and Dog objects from Company's collections dogs and cats.
             this.getDogs().forEach(Animal::monthOlder);
             this.getCats().forEach(Animal::monthOlder);
 
@@ -174,11 +181,17 @@ public class Company {
                             .parallel().toList().get(0)
             );
 
+            //Menu method calling as a start of new month
             Main.callMenu();
         }
 
     }
 
+    //Gets 2 objects with different sex values of Cat or Dog class. Then checks for breed and if values are equal, then creating from 1 to 5
+    //new objects (Cat or Dog) with the same breed has 100% probability.
+    // If breed is not equal for 2 received objects, creating of new from 1 to 5 objects (Cat or Dog) objects has 30% probability
+    // and these new objects will have "General" value of breed field.
+    //All created Cat or Dog objects will be added to Company's cats or dogs collections.
     public void pairing(Cat f, Cat m) {
         System.out.println(f+" was pairing with "+m);
 
@@ -211,6 +224,10 @@ public class Company {
         }
     }
 
+    //Deduction of coaches objects' salary fields from Company capital
+    //Calling methods trainCat or trainDog method for Cat or Dog object from Company's collections
+    //by each Coach from Company coaches collection and further exhibition method call of each Cat or Dog, but only if
+    //skill of these objects are not 0.
     public void coaching(){
 
         this.getCoaches().forEach(coach -> this.capital-=coach.getSalary());
@@ -223,6 +240,7 @@ public class Company {
 
     }
 
+    //Control if the Company object has neededFeed less than Feed.size()
     public boolean feedsControl(){
 
         if(this.getFeeds().size()<this.neededFeed){
